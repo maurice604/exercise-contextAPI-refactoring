@@ -1,14 +1,15 @@
 // src/Cars.jsx
 
-import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
+import CarsContext from './context/CarsContext';
 import carBlue from './images/carBlue.jpeg';
 import carRed from './images/carRed.jpeg';
 import carYellow from './images/carYellow.jpeg';
-import { moveCar } from './redux/actionCreators';
 
-function Cars({ redCar, blueCar, yellowCar, moveCar }) {
+class Cars extends React.Component {
+  render() {
+    const { redCar, blueCar, yellowCar } = this.context.cars;
+    const { moveCar } = this.context;
   return (
     <div>
       <div>
@@ -52,20 +53,9 @@ function Cars({ redCar, blueCar, yellowCar, moveCar }) {
       </div>
     </div>
   );
+  }
 }
 
-Cars.propTypes = {
-  moveCar: PropTypes.func.isRequired,
-  blueCar: PropTypes.bool.isRequired,
-  redCar: PropTypes.bool.isRequired,
-  yellowCar: PropTypes.bool.isRequired,
-};
+Cars.contextType = CarsContext;
 
-const mapStateToProps = (state) => ({
-  redCar: state.carReducer.cars.red,
-  blueCar: state.carReducer.cars.blue,
-  yellowCar: state.carReducer.cars.yellow});
-
-const mapDispatchToProps = { moveCar };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cars);
+export default Cars;
